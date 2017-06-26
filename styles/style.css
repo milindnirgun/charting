@@ -1,0 +1,56 @@
+/* Styles go here */
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+/*
+.axis {
+	font: 14px sans-serif;
+}
+*/
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.label {
+	text-anchor: middle;
+	font: 16px sans-serif;
+}
+
+.title {
+	text-anchor: middle;
+	font: 20px sans-serif;
+	text-decoration: underline;
+}
+
+.area {
+	fill: salmon;
+}
+
+.area_above {
+	fill: steelblue;
+}
+.area_under {
+	fill: salmon;
+}
+
+.grid line {
+	stroke: lightgrey;
+	stroke-opacity: 0.7;
+	shape-rendering: crispEdges;
+}
+
+.grid path {
+	stroke-width: 0;
+}
+	
+
