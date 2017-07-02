@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles/style.css">
+<!-- Added second line to the line graph -->
+<body>
+<!-- load the d3.js library -->
+<script>
+	var Person = function (name) {
+			this.name = name;
+			this.say = "default";
+		};
+	
+	Person.prototype.set = function (words) {
+		this.say = words;
+	};
+	
+	Person.prototype.get = function () { return this.say; };
+	
+</script>
+
+<div id="person">
+<script>
+	var tom = new Person("tom");
+	tom.set("Hello");
+	localStorage.setItem('user', JSON.stringify(tom));
+	
+</script>
+</div>
+
+<div id="getobject">
+	
+	<h2> Hello World.<br></h2>
+	<script>
+		var user = JSON.parse(localStorage.getItem('user'));
+		alert(user.name + " says " + user.get);
+	</script>
+</div>

@@ -1,35 +1,19 @@
-<!DOCTYPE html>
-<!-- This moment onwards we change all chart examples to auto resize the
-		  window -->
+var margin = {top: 60, right: 60, bottom: 180, left: 100};
 
-<head>
-	<meta charset="utf-8">
-	<title>Dynamically Resizing Chart</title>
-	<script src="../lib/d3.min.js"></script>
-	<link rel="stylesheet" href="../styles/style.css">
-</head>
-<body>
-	<div id="chart"></div>
-	
-  <script>	
-		var chartDiv = document.getElementById("chart");
-		
-		function redraw() {
-			// Extract the width & height of the chart DIV
-			var div_width = chartDiv.clientWidth;
-			var div_height = chartDiv.clientHeight;
-			
+
+function draw() {
+				
+			console.log(chartContainer.node().clientWidth + " x " + chartContainer.node().clientHeight);
 			// set the dimensions and margins of the graph
-			var margin = {top: 60, right: 60, bottom: 180, left: 100},
-			width = div_width - margin.left - margin.right,
-			height = div_height - margin.top - margin.bottom;
+			var drawWidth = chartContainer.node().clientWidth - margin.left - margin.right;
+			var drawHeight = chartContainer.node().clientHeight - margin.top - margin.bottom;
 		
 			// parse the date / time
 			var parseTime = d3.timeParse("%d-%b-%y");
 		
 			// set the ranges
-			var x = d3.scaleTime().range([0, width]);
-			var y = d3.scaleLinear().range([height, 0]);
+			var x = d3.scaleTime().range([0, drawWidth]);
+			var y = d3.scaleLinear().range([drawHeight, 0]);
 			var xAxis = d3.axisBottom(x).tickFormat(d3.timeFormat("%Y-%m-%d"));
 
 			// define the first line
@@ -53,17 +37,20 @@
 			function drawYGridlines() {
 				return d3.axisLeft(y).ticks(10)
 			}
-			 
+			
+			
+			// Clear the old svg if resizing
+			d3.select('svg').remove();
 		
 			// append the svg obgect to the body of the page
 			// appends a 'group' element to 'svg'
 			// moves the 'group' element to the top left margin
-			var svg = d3.select(chartDiv).append("svg")
-			.attr("width", width + margin.left + margin.right)
-			.attr("height", height + margin.top + margin.bottom)
-			.append("g")
-			.attr("transform",
-			"translate(" + margin.left + "," + margin.top + ")");
+			var svgContainer = d3.select(".svg-container").append("svg")
+														.attr("width", drawWidth + margin.left + margin.right)
+														.attr("height", drawHeight + margin.top + margin.bottom)
+														.append("g")
+															.attr("transform",
+																		"translate(" + margin.left + "," + margin.top + ")");
 			
 			// Get the data
 			d3.csv("../data/data2.csv", function(error, data) {
@@ -80,53 +67,53 @@
 					
 					
 					// Add the valueline1 path
-					svg.append("path")
+					svgContainer.append("path")
 							.data([data])
 							.attr("class", "line")
 							.attr("d", valueline1);
 					
 					// Add the valueline2 path
-					svg.append("path")
+					svgContainer.append("path")
 							.data([data])
 							.attr("class", "line")
 							.style("stroke", "red")
 							.attr("d", valueline2);
 
 					// Add the X gridlines
-					svg.append("g")
+					svgContainer.append("g")
 							.attr("class", "grid")
-							.attr("transform", "translate(0," + height + ")")
+							.attr("transform", "translate(0," + drawHeight + ")")
 							.call(drawXGridlines()
-										.tickSize(-height)
+										.tickSize(-drawHeight)
 										.tickFormat("")
 								)
 								
 					// Add the Y gridlines
-					svg.append("g")
+					svgContainer.append("g")
 							.attr("class", "grid")
-							.call(drawYGridlines().tickSize(-width).tickFormat(""));
+							.call(drawYGridlines().tickSize(-drawWidth).tickFormat(""));
 							
 					// Add label for valueline1
-					svg.append("text")
-							.attr("transform", "translate(" + (width)+","+y(data[0].close)+")")  //since data is ordered in reverse
-							//.attr("transform", "translate(" + (width)+","+y(data[data.length-1].close)+")")
+					svgContainer.append("text")
+							.attr("transform", "translate(" + (drawWidth)+","+y(data[0].close)+")")  //since data is ordered in reverse
+							//.attr("transform", "translate(" + (drawWidth)+","+y(data[data.length-1].close)+")")
 							.attr("dY", ".35em")
 							.attr("text-anchor", "start")
 							.style("fill", "steelblue")
 							.text("Close");
 							
 					// Add label for valueline2
-					svg.append("text")
-							.attr("transform", "translate(" + (width)+","+y(data[0].open)+")")
+					svgContainer.append("text")
+							.attr("transform", "translate(" + (drawWidth)+","+y(data[0].open)+")")
 							.attr("dY", ".35em")
 							.attr("text-anchor", "start")
 							.style("fill", "red")
 							.text("Open");
 
 					// Add the X Axis
-					svg.append("g")
+					svgContainer.append("g")
 							.attr("class", "axis")
-							.attr("transform", "translate(0," + height + ")")
+							.attr("transform", "translate(0," + drawHeight + ")")
 							.call(xAxis)
 							.selectAll("text")
 								.style("text-anchor", "end")
@@ -135,43 +122,33 @@
 								.attr("transform", "rotate(-45)");
 								
 					// Add the X Axis label
-					svg.append("text")
-							.attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 80) + ")")
-							//.attr("x", width/2)
-							//.attr("Y", height + margin.top + 20)
+					svgContainer.append("text")
+							.attr("transform", "translate(" + (drawWidth/2) + " ," + (drawHeight + margin.top + 80) + ")")
+							//.attr("x", drawWidth/2)
+							//.attr("Y", drawHeight + margin.top + 20)
 							.attr("class", "label")
 							//.style("text-anchor", "middle")
 							.text("Date");
 							
 					// Add the Y Axis
-					svg.append("g")
+					svgContainer.append("g")
 							.call(d3.axisLeft(y));
 					
 					// Add the Y Axis label
-					svg.append("text")
+					svgContainer.append("text")
 							.attr("transform", "rotate(-90)")
-							.attr("x", 0 - (height/2))
+							.attr("x", 0 - (drawHeight/2))
 							.attr("y", 0 - margin.left)
 							.attr("dy", "2em")
 							.attr("class", "label")
 							.text("Value");
 							
 					// Add a chart title
-					svg.append("text")
-							.attr("x", (width / 2))
+					svgContainer.append("text")
+							.attr("x", (drawWidth / 2))
 							.attr("y", 0 - (margin.top / 2))
 							.attr("class", "title")
 							.text("Value vs Date Line Graph");
 
 			});
-	}
-	
-	// Draw for the first time
-	redraw();
-	
-	// Add event listener to redraw every time window is resized
-	window.addEventListener("resize", redraw);
-	
-  </script>
-</body>
-
+}

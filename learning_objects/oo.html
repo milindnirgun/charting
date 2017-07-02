@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles/style.css">
+<!-- Added second line to the line graph -->
+<body>
+<script src="../lib/underscore-min.js"></script>	
+<script src="../utils/util.js"></script>
+<script>
+	
+	function displayCar() {
+			//console.log(this.make + ", " + this.model + ", " + this.year);
+		var result = 'A beautiful ' + this.year + ' ' + this.make + ' ' + this.model;
+		pretty_print(result);
+	}
+	
+	/**
+	 * This method defines an class with properties and methods. It allows 
+	 * creation of an object from the prototype without using constructor. 
+	 * However this does not allow adding properties later using the prototype
+	 * property. eg. Car.prototype.color = ' ' will not work.
+	 */
+	var Car = {
+		make: 'default',
+		model: 'default',
+		year: '1900',
+		display: displayCar		// Add a method to the object
+	};
+	
+	// Create an object to inherit from the given prototype
+	var myCar1 = Object.create(Car);
+	myCar1.make = 'BMW';
+	myCar1.model = '328i';
+	myCar1.year = '2014';
+	
+	//Car.prototype.color = null;
+	
+	/**
+	 * Another method of defining objects with Constructor methods. Simplifies
+	 * object creation by calling the constructors. More Java like. This also
+	 * allows addition of properties later with prototype property.
+	 */
+	function AnotherCar(make, model, year) {
+		this.make = make;
+		this.model = model;
+		this.year = year;
+		
+		this.display = displayCar;
+		
+	}
+	
+	var myCar2 = new AnotherCar('Mitsubishi', 'Montero Sport', '2001');
+	
+	// Adding a property to a previously defined class -- questionnable
+	AnotherCar.prototype.color = null;
+	
+
+</script>
+
+
+<div id="getobject">
+	
+	<h2> Hello World.<br></h2>
+	<script>
+		myCar1.display();
+		showOwnProperties(myCar1);
+		myCar1.color = 'champagne gold';
+		showOwnProperties(myCar1);
+		
+		myCar2.display();
+		showOwnProperties(myCar2);
+		myCar2.color = 'black';
+		showOwnProperties(myCar2);
+		
+		// myCar3 does not inherit the dynamically added property color to
+		// AnotherCar. 
+		var myCar3 = new AnotherCar('Toyota', 'Camry', '1999', 'black');
+		myCar3.display();
+		showOwnProperties(myCar3);
+		
+	</script>
+</div>
+<input type="text" name="age" size="3" onChange="validate(this, 18, 99)">
+<p></p>
+<h2>Using _</h2>
+<script>
+	var myCar4 = _.create(Car, {make: 'Tesla', model: 'Model 3', year: '2018'});
+	pretty_print(_.keys(myCar4));
+	pretty_print(_.values(myCar4));
+</script>
+</body>
+</html>

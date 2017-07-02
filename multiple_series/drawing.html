@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!-- This moment onwards we change all chart examples to auto resize the
+		  window -->
+
+<head>
+	<meta charset="utf-8">
+	<title>Dynamically Resizing Chart</title>
+	<script src="../lib/underscore-min.js"></script>	
+	<script src="../lib/d3.min.js"></script>
+	<script src="../utils/util.js"></script>
+	<script src="../utils/drawing.js"></script>
+	<style>
+		.user-option {
+				display: block;
+				margin: 10px 0px 10px;
+		}
+		.svg-container {
+				border: 1px dotted blue;
+		}
+		svg {
+				border: 1px dotted green;
+		}
+		.line {
+				stroke: steelblue;
+				stroke-width: 4px;
+				fill: none;
+		}
+		.chart-container {
+			position: fixed;
+			left: 20px;
+			right: 0px;
+			top: 0px;
+			bottom: 20px;
+		}
+				
+	</style>
+</head>
+
+<body>
+
+
+<div class="chart-container" id="chart">
+    <button class="user-option">Some User Options</button>
+    <div class="svg-container"></div>
+</div>
+
+<script>
+	//var chartContainer = document.getElementById("chart");
+	var chartContainer = d3.select('.chart-container');
+	draw();
+
+	// Add event listener to redraw every time window is resized
+	window.addEventListener("resize", draw);
+
+
+</script>
+
+</body>
+</html>

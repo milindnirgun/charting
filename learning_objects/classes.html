@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles/style.css">
+<!-- Added second line to the line graph -->
+<body>
+<script src="../lib/underscore-min.js"></script>	
+<script src="../utils/util.js"></script>
+<script>
+	
+class Point {
+	constructor(x, y) {
+		this.x = x;
+		this.y = y;
+	}
+	
+	static distance(a, b) {
+		const dx = a.x - b.x;
+		const dy = a.y - b.y;
+		
+		return Math.hypot(dx, dy);
+	}
+}
+
+</script>
+	<h2> Hello World.<br></h2>
+	<script>
+		const p1 = new Point(5, 5);
+		const p2 = new Point(10, 10);
+		
+		console.log(_.keys(p1));
+		console.log(Point.distance(p1, p2));
+			
+	</script>
+	<h2> Create objects using Underscore.<br></h2>
+	<script>
+		const p3 = _.create(Point, {x: 15, y: 15});
+		console.log(_.keys(p3));
+		pretty_print(_.keys(p3));
+	</script>		
+	
+</body>
+</html>
+
