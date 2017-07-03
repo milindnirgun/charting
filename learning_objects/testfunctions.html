@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!-- Added Fill areas above and under the curve without the line. This 
+		 fits the curve perfectly. -->
+<!-- modified from d8.html to use vizz -->		 
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../styles/style.css">
+	<script src="../lib/underscore-min.js"></script>
+	<script src="../utils/vizz.js"></script>
+</head>
+<body>
+	<p id="demo"></p>
+  <script>
+	function foo(o, x, y) {
+		_.each(o, function(n) { console.log(n[x] + ":" + n[y]) });
+		return "Hello World";
+		//return o[1].x + " : " + o[1].y;
+	}
+	
+		var datastr = '[' +
+									'{ "date":"2017-01-01" , "close":"128.20" },' +
+									'{ "date":"2017-01-02" , "close":"126.92" },' +
+									'{ "date":"2017-01-03" , "close":"131.35" },' +
+									'{ "date":"2017-01-04" , "close":"135.50" } ]';
+
+		var obj = JSON.parse(datastr);
+		
+		document.getElementById("demo").innerHTML = foo(obj, "date", "close");
+  </script>
+  
+</body>
+

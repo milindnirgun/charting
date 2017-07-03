@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<!-- Important change here - auto resizing -->
+<!-- Added Fill areas above and under the curve without the line. This 
+		 fits the curve perfectly. -->
+<!-- modified from d8.html to use vizz -->		 
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="../styles/style.css">
+	<script src="../lib/underscore-min.js"></script>	
 	<script src="../lib/d3.min.js"></script>
 	<script src="../utils/vizz.js"></script>
-	<script src="drawing13.js"></script>
+	<script src="dvizz8.js"></script>
 </head>
 <body>
 	<div class="chart-container" id="chart">
     <div class="svg-container"></div>
 	</div>
-
   <script>
 		//var chartContainer = d3.select('.chart-container');
 		var chartContainer = document.getElementById("chart");
@@ -21,5 +23,6 @@
 		draw();
 		
   </script>
+  
 </body>
 

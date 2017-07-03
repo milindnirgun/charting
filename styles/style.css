@@ -5,7 +5,8 @@
 
 }
 
-.chart {
+.chart-container {
+	border: 1px dotted black;
 	position: fixed;
 	left: 0px;
 	right: 0px;
@@ -13,6 +14,11 @@
 	bottom: 0px;
 }
 
+.svg-container {
+	border: 1px dotted blue;
+}
+
+/*
 .svg-container {
 	display: inline-block;
 	position: relative;
@@ -28,6 +34,7 @@
 	top: 10px;
 	left: 0;
 }
+*/
 
 .line {
   fill: none;
