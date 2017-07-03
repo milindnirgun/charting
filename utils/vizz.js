@@ -47,7 +47,11 @@ function setXDomain(data, x, stat, rangeStart=0) {
  */
 function setYDomain(data, y, stat, rangeStart=0) {
 	var d3elem = d3[stat];
-	var range = d3elem(data, function(d) { return d[y]; });
+	//var range = [0, d3.max(data, function(d) { return d[y]; })];
+	console.log(_.isFunction(y));
+	result = y();
+	console.log("Result = " + result);
+	//var range = d3elem(data, function(d) { return _.isFunction(y) ? y : d[y]; });
 	if (_.isArray(range)) {
 		console.log("Range is an Array");
 		_yRange.domain(range);
@@ -94,22 +98,16 @@ function parseTime(datetime, format) {
 
 /**
  * Returns a d3 line with curve.
- * TODO - generalize to work with different variables x and y variables
- * passed as arguments. This will eliminate the next getLine2() function.
+ * TODO - make it configurable to use different types of curve or none
  */
-function getLine1() {
+function getLine(x, y, xaxis=_xRange, yaxis=_yRange) {
 	return d3.line()
 						.curve(d3.curveCardinalOpen)
-						.x(function(d) { return _xRange(d.date); })
-						.y(function(d) { return _yRange(d.close); })
+						.x(function(d) { return xaxis(d[x]); })
+						.y(function(d) { return yaxis(d[y]); })
 }
 
-function getLine2() {
-	return d3.line()
-						.curve(d3.curveCardinalOpen)
-						.x(function(d) { return _xRange(d.date); })
-						.y(function(d) { return _yRange(d.open); })
-}
+
 
 /**
  * Returns a d3 area type with _xRange & _yRange set with the parameters
@@ -135,8 +133,8 @@ function area(x, y, under = true) {
 function setGlobal(elem) {
 	_width = elem.clientWidth - margin.left - margin.right;
 	_height = elem.clientHeight - margin.top - margin.bottom;
-	_xRange = scaleX(_width);
-	_yRange = scaleY(_height);
+	_xRange = scaleX();
+	_yRange = scaleY();
 
 	d3.select('svg').remove();  // Removes previous svg for refreshing the drawing
 

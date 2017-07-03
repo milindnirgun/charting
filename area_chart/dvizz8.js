@@ -9,7 +9,7 @@ function draw() {
 		var svgContainer = createSvgContainer();
 		
 		// define the line
-		var valueline = getLine1();
+		var valueline = getLine("date", "close");
 
 		// Define the area under the smoothened curve
 		var areaUnder = area("date", "close");

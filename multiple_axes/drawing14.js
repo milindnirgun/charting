@@ -7,8 +7,11 @@ function draw() {
 			setGlobal(chartContainer);	
 			//console.log(_width + " x " + _height);
 			
-			var valueline1 = getLine("date", "close");
-			var valueline2 = getLine("date", "open");
+			var y0 = _yRange;
+			var y1 = scaleY();
+			
+			var valueline1 = getLine("date", "close", _xRange, y0);
+			var valueline2 = getLine("date", "open", _xRange, y1);
 
 			var svgContainer = createSvgContainer();
 			// Get the data
@@ -20,15 +23,9 @@ function draw() {
 						d.close = +d.close;   // this ensures the d.close var is treated as a number
 						d.open = +d.open;
 					});
-
-					// Scale the range of the data
-					setXDomain(data, "date", "extent");
-					//var f = function(d) { return Math.max(d.open, d.close); }
-					//setYDomain(data, f, "max");
-						/*
+					
 					// Scale the range of the data
 					_xRange.domain(d3.extent(data, function(d) { return d.date; }));
-					*/
 					_yRange.domain([0, d3.max(data, function(d) { return Math.max(d.open, d.close); })]);
 					
 					
