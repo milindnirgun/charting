@@ -26,8 +26,8 @@ function draw() {
 					
 					// Scale the range of the data
 					_xRange.domain(d3.extent(data, function(d) { return d.date; }));
-					_yRange.domain([0, d3.max(data, function(d) { return Math.max(d.open, d.close); })]);
-					
+					_yRange.domain(d3.extent(data, function(d) { return d.close; }));
+					y1.domain(d3.extent(data, function(d) { return d.open; }));
 					
 					// Add the valueline1 path
 					svgContainer.append("path")
@@ -59,7 +59,6 @@ function draw() {
 					// Add label for valueline1
 					svgContainer.append("text")
 							.attr("transform", "translate(" + (_width)+","+ _yRange(data[0].close)+")")  //since data is ordered in reverse
-							//.attr("transform", "translate(" + (_width)+","+y(data[data.length-1].close)+")")
 							.attr("dY", ".35em")
 							.attr("text-anchor", "start")
 							.style("fill", "steelblue")
@@ -67,7 +66,7 @@ function draw() {
 							
 					// Add label for valueline2
 					svgContainer.append("text")
-							.attr("transform", "translate(" + (_width)+","+ _yRange(data[0].open)+")")
+							.attr("transform", "translate(" + (_width)+","+ y1(data[0].open)+")")
 							.attr("dY", ".35em")
 							.attr("text-anchor", "start")
 							.style("fill", "red")
@@ -97,6 +96,11 @@ function draw() {
 					svgContainer.append("g")
 							.call(d3.axisLeft(_yRange));
 					
+					// Add the Y Axis
+					svgContainer.append("g")
+							.attr("transform", "translate( " + _width + ", 0)")
+							.call(d3.axisRight(y1));
+
 					// Add the Y Axis label
 					svgContainer.append("text")
 							.attr("transform", "rotate(-90)")

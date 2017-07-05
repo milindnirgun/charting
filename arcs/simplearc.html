@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!-- Basic Bar Chart-->
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../styles/style.css">
+	<!--<script src="../lib/underscore-min.js"></script>-->
+	<script src="../lib/d3.min.js"></script>
+	<!--<script src="../utils/vizz.js"></script>-->
+	<!--<script src="simplearc.js"></script>-->
+	<style>
+	.arc-outer {
+		fill: #F25F5C;
+		stroke: black;
+	}
+	.arc-middle {
+		fill: #FFE066;
+	}
+	.arc-inner {
+		fill: #247BA0;
+	}
+		
+	</style>
+</head>
+<body>
+	<div class="chart-container" id="chart">
+
+	</div>
+
+  <script>
+		var colors = ["#50514F", "#F25F5C", "#FFE066", "#247BA0", "#70C1B3"];
+		var colornames = ["dark liver", "sunset orange", "mustard", "lapis lazuli", "green sheen"];
+		
+		
+		//var chartContainer = d3.select('.chart-container');
+		var chartContainer = document.getElementById("chart");
+		// Add event listener to redraw every time window is resized
+		//window.addEventListener("resize", draw);
+		var margin = {top: 60, right: 60, bottom: 180, left: 100},
+				width = 960,
+				height = 800,
+				radius = Math.min(width, height) / 1.9;
+		
+		var svg = d3.select("body").append("svg")
+									.attr("width", width)
+									.attr("height", height)
+									.append("g")
+									.attr("transform", "translate(300, 300)");
+
+		var arc1 = d3.arc()
+								.innerRadius(160)
+								.outerRadius(200)
+								.startAngle(0)
+								.endAngle(Math.PI * 2);
+		var arc2 = d3.arc()
+								.innerRadius(120)
+								.outerRadius(160)
+								.startAngle(0)
+								.endAngle(Math.PI * 2);
+		var arc3 = d3.arc()
+								.innerRadius(80)
+								.outerRadius(120)
+								.startAngle(0)
+								.endAngle(Math.PI * 2);
+		
+		svg.append("path")
+				.attr("class", "arc-outer")
+				.attr("d", arc1);
+									
+		svg.append("path")
+				.attr("class", "arc-middle")
+				.attr("d", arc2);
+		
+		svg.append("path")
+				.attr("class", "arc-inner")
+				.attr("d", arc3);
+
+  </script>
+</body>
+

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!-- Demonstrates paths and clip-paths -->
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../styles/style.css">
+	<script src="../lib/d3.min.js"></script>
+	<style>
+	.flex-container {
+		display: -webkit-flex;
+		display: flex;
+		-webkit-flex-wrap: wrap;
+		justify-content: center;
+		width: 1080px;
+		height: 660px;
+		background-color: lightsteelblue;
+	}
+	
+	.flex-item {
+		background-color: white;
+		width: 500px;
+		height: 300px;
+		margin: 10px;
+	}
+	</style>
+</head>
+<body>
+
+	<div class="flex-container" id="chart">
+		<div class="flex-item" id="path">
+			<h2>Using Path to draw a triangle</h2><br>
+			A path is an outline of an SVG shape which is described with a 'mini language'
+			inside a single attribute, <i>d</i>.
+		</div>
+		<div class="flex-item" id="clippath">
+			<h2>Clipped Path</h2><br>
+			A clipPath is the path of a SVG shape that can be used to show the intersection
+			between two shapes.
+			</div>
+	</div>
+
+  <script>
+		//var chartContainer = d3.select('.chart-container');
+		var chartContainer = document.getElementById("chart");
+		// Add event listener to redraw every time window is resized
+		//window.addEventListener("resize", draw);
+		
+		function draw() {
+			
+			var container1 = d3.select("#path")
+												.append("svg")
+												.attr("width", 449)
+												.attr("height", 249);
+
+			container1.append("path")
+								.style("stroke", "black")
+								.style("fill", "none")
+								.attr("d", "M 100,50, L 200,150, L 300,50 Z");
+
+			var container2 = d3.select("#clippath")
+												.append("svg")
+												.attr("width", 449)
+												.attr("height", 249);
+
+			container2.append("clipPath")
+								.attr("id", "ellipse-clip")
+								.append("ellipse")
+									.attr("cx", 200)
+									.attr("cy", 100)
+									.attr("rx", 100)
+									.attr("ry", 50);
+			container2.append("rect")
+								.attr("x", 125)
+								.attr("y", 75)
+								.attr("clip-path", "url(#ellipse-clip)")
+								.style("fill", "lightgrey")
+								.attr("height", 100)
+								.attr("width", 200);
+		}
+		
+		draw();
+		
+		
+  </script>
+</body>

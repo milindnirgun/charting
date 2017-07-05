@@ -1,0 +1,79 @@
+Attributes:
+x, y
+width, height
+x1, x2, x3, x4
+points
+cx, cy
+r,
+rx, ry
+transform(translate(x, y), scale(k), rotate(a))
+text-anchor
+dx, dy
+textLength
+lengthAdjust
+
+Styles:
+fill
+stroke, stroke-width, stroke-dasharray, stroke-linecap(butt, round, square)
+stroke-linejoin(miter, round, bevel)
+opacity, fill-opacity, stroke-opacity
+writing-mode
+glyph-orientation-vertical
+
+HANDLING DATA
+
+Extracting data from a portion of a string:
+value,date,score
+$1234,2011-03-23,99
+$2234,2011-03-24,100
+$3234,2011-03-25,99
+$4235,2011-03-26,100
+
+Following code removes the leading "$" character from value:
+d3.csv("dataSample.csv", function(error, data) {
+	if (error) throw error;
+	data.forEach(function(d) {
+		d.value = +d.value.substring(1);
+	});
+...
+});
+
+Grouping and summing data (d3.nest)
+date,value
+23-Mar-11,3
+23-Mar-11,2
+24-Mar-11,3
+24-Mar-11,3
+24-Mar-11,6
+24-Mar-11,2
+24-Mar-11,7
+25-Mar-11,4
+25-Mar-11,5
+25-Mar-11,1
+25-Mar-11,4
+
+To group the above data by date and sum up the values use:
+d3.csv("source-data.csv", function(error, csv_data) {
+	if (error) throw error;
+	var data = d3.nest()
+			.key(function(d) { return d.date;})
+			.rollup(function(d) {
+					return d3.sum(d, function(g) {return g.value; });
+			}).entries(csv_data);
+});
+This produces the result:
+key,values
+23-Mar-11,5
+24-Mar-11,21
+25-Mar-11,14
+
+Selecting random string from an array for fill color:
+var colorRange = ['green', 'orange', 'red', 'blue'];
+
+function randomColor() {
+	return colorRange[Math.floor(Math.random() * colorRange.length)];
+}
+
+Use this function in a style like so
+	.style("fill", randomColor)
+

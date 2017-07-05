@@ -10,7 +10,7 @@ function draw() {
 			var valueline1 = getLine("date", "close");
 			var valueline2 = getLine("date", "open");
 
-			var svgContainer = createSvgContainer();
+			var svgContainer = createSvgContainer(".svg-container");
 			// Get the data
 			d3.csv("../data/data2.csv", function(error, data) {
 				if (error) throw error;

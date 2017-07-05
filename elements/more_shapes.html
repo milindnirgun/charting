@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!-- Demonstrates more shapes like rounded rectangle, line, polyline -->
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../styles/style.css">
+	<script src="../lib/d3.min.js"></script>
+</head>
+<body>
+	<div class="chart-container" id="chart">
+		<div id="rounded_rect"><h2>A rounded rectangle</h2></div>
+		<div id="line"><h2>A line</h2></div>
+		<div id="polyline"><h2>A Polyline</h2>
+			<p> A polyline is a sequence of connected lines described with a single
+					attribute - <i>points</i>.
+			</p>
+		</div>
+		<div id="polygon"><h2>A Polygon</h2>
+			<p> A polygon is a sequence of connected lines which form a closed shape
+					described with a single attribute - <i>points</i>.
+			</p>
+		</div>
+	</div>
+
+  <script>
+		//var chartContainer = d3.select('.chart-container');
+		var chartContainer = document.getElementById("chart");
+		// Add event listener to redraw every time window is resized
+		//window.addEventListener("resize", draw);
+		
+		function draw() {
+			
+			var container1 = d3.select("#rounded_rect")
+												.append("svg")
+												.attr("width", 449)
+												.attr("height", 249);
+
+			container1.append("rect")
+								.attr("x", 150)
+								.attr("y", 50)
+								.attr("width", 200)
+								.attr("height", 100)
+								.attr("rx", 10)
+								.attr("ry", 10);
+
+			var container2 = d3.select("#line")
+												.append("svg")
+												.attr("width", 449)
+												.attr("height", 249);
+
+			container2.append("line")
+								.style("stroke", "black")
+								.attr("x1", 100)
+								.attr("y1", 50)
+								.attr("x2", 300)
+								.attr("y2", 150);
+
+			var container3 = d3.select("#polyline")
+												.append("svg")
+												.attr("width", 449)
+												.attr("height", 249);
+
+			container3.append("polyline")
+								.style("stroke", "black")
+								.style("fill", "none")
+								//.attr("points", "100,50, 150,50, 150,150, 100,150, 100,50");
+								.attr("points", "100,50, 200,150, 300,50");
+
+			var container4 = d3.select("#polygon")
+												.append("svg")
+												.attr("width", 449)
+												.attr("height", 249);
+
+			container4.append("polygon")
+								.style("stroke", "black")
+								.style("fill", "none")
+								.attr("points", "100,50, 200,150, 300,50");
+								//.attr("points", "100,50, 200,150, 300,50");
+		}
+		
+		draw();
+		
+		
+  </script>
+</body>

@@ -1,14 +1,15 @@
 /**
  * Global variables defined here
  */
-var _xRamge, _yRange;  // d3 objects, Specify the X and Y axes ranges
+var _xRange, _yRange;  // d3 objects, Specify the X and Y axes ranges
 var _width, _height;	// the width and height of the actual drawing area
 											// calculated after subtracting margins from the 
 											// chart container
 
 /**
- * Returns the X axis scale. 
- * TODO - add user specified type of scale and range
+ * Returns the X axis scale. This works for a line chart. Different scaling
+ * may be required for other charts.
+ * TODO - add user specified type of scale and range. Support other scales
  */
 function scaleX() {
 	return d3.scaleTime().range([0, _width]);
@@ -147,11 +148,10 @@ function setGlobal(elem) {
  * TODO - creates the SVG within a ".svg-container" classed element. This
  * is not necessary; can be done directly on the body. Maybe later.
  */
-function createSvgContainer() {
-	// append the svg obgect to the body of the page
+function createSvgContainer(c) {
 	// appends a 'group' element to 'svg'
 	// moves the 'group' element to the top left margin
-	return d3.select(".svg-container").append("svg")
+	return d3.select(c).append("svg")
 						.attr("width", _width + margin.left + margin.right)
 						.attr("height", _height + margin.top + margin.bottom)
 						.append("g")
