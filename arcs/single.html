@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!-- Basic Bar Chart-->
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../styles/style.css">
+	<!--<script src="../lib/underscore-min.js"></script>-->
+	<script src="../lib/d3.min.js"></script>
+	<!--<script src="../utils/vizz.js"></script>-->
+	<!--<script src="simplearc.js"></script>-->
+	<style>
+	.arc-outer {
+		fill: #F25F5C;
+		stroke: none;
+	}
+	.arc-body {
+		fill: #FF8800;
+		stroke: none;
+	}
+	.chart-container {
+		 background-color: white;
+		 border-width: "2px";
+		 border-style: "solid";
+		 border-color: "white";
+	 }
+	 .percentage {
+		 color: white;
+		 line-height: 1;
+		 font-family: "sans-serif";
+		 font-weight: bold;
+		 font-size: 400%;
+	 }
+
+	</style>
+</head>
+<body>
+	<div class="chart-container" id="chart">
+
+	</div>
+
+  <script>
+		// Add event listener to redraw every time window is resized
+		//window.addEventListener("resize", draw);
+		var margin = {top: 0, right: 0, bottom: 0, left: 0},
+				width = 320,
+				height = 320,
+				radius = 240,//Math.min(width, height)/2,
+				spacing = .1,
+				color = d3.scaleOrdinal(d3.schemeCategory20c);
+		var colors = ["#007E33", "#FFE066", "#247BA0", "#70C1B3"];
+
+		var data1 = [{index: .4, value: .95}];
+		var data2 = [{index: .4, value: .97}];
+		var data3 = [{index: .3, value: .94}];
+
+		var arcPartial = d3.arc()
+										.startAngle(0)
+										.endAngle(function(d) { return d.value * Math.PI * 2; })
+										.innerRadius(function(d) { return d.index * radius; })
+										.outerRadius(function(d) { return (d.index + spacing) * radius; });
+
+		var arcFull = d3.arc()
+										.startAngle(0)
+										.endAngle(function(d) { return Math.PI * 2; })
+										.innerRadius(function(d) { return d.index * radius; })
+										.outerRadius(function(d) { return (d.index + spacing) * radius; });
+
+		var svg1 = d3.select("#chart").append("svg")
+																	.attr("width", width)
+																	.attr("height", height)
+																	.attr("style", "outline: thin solid white")
+																	.append("g")
+																	.attr("transform", "translate(150, 150)");
+
+		var group = svg1.selectAll("g")
+												.data(data1)
+												.enter().append("g");
+
+		svg1.append("svg:text")
+													.attr("class", "percentage")
+													.attr("dy", ".35em")
+													.attr("text-anchor", "middle")
+													.attr("style", "color: white")
+													.text(data1[0].value* 100 + "%");
+
+		var background = group.append("path")
+													.attr("class", "arc-body")
+													.attr("d", arcFull);
+
+		var foreground = group.append("path")
+													.attr("class", "arc-body")
+													.attr("d", arcPartial)
+													.style("fill", colors[0]);
+													//.style("fill", function(d, i) { return colors[i]; });
+		group.append("text").attr("transform", function(d) { return "translate(" + arcFull.centroid(d) + ")"; })
+												.attr("class", "arc-text")
+												.text(function(d) { return (d.value * 100) + "%"; });
+
+/* Second Gauge */
+var svg2 = d3.select("#chart").append("svg")
+															.attr("width", width)
+															.attr("height", height)
+															.attr("style", "outline: thin solid white")
+															.append("g")
+															.attr("transform", "translate(150, 150)");
+
+var group = svg2.selectAll("g")
+										.data(data2)
+										.enter().append("g");
+
+var background = group.append("path")
+											.attr("class", "arc-body")
+											.attr("d", arcFull);
+
+var foreground = group.append("path")
+											.attr("class", "arc-body")
+											.attr("d", arcPartial)
+											.style("fill", colors[0]);
+											//.style("fill", function(d, i) { return colors[i]; });
+
+
+
+
+  </script>
+</body>
