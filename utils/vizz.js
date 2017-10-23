@@ -7,6 +7,20 @@ var _width, _height;	// the width and height of the actual drawing area
 											// chart container
 
 /**
+ * Returns a time scale with the given range. 
+ * usage:  x = scaleTime([0, n]) where n could be the width or height
+ */
+function scaleTime(range)
+{
+	if (range == undefined || range == NaN) {
+		console.log("range is not defined");
+		throw new Error("range is not defined");
+	}
+	else
+	return d3.scaleTime().range(range);
+}
+
+/**
  * Returns the X axis scale. This works for a line chart. Different scaling
  * may be required for other charts.
  * TODO - add user specified type of scale and range. Support other scales
@@ -132,14 +146,15 @@ function area(x, y, under = true) {
  * X & Y ranges which depend on the drawing dimensions.
  */
 function setGlobal(elem) {
+	if(margin == NaN || margin == undefined) {
+		console.log("undefined margin. Using default");
+		var margin = {top: 10, right: 10, bottom: 10, left: 10};
+	}
 	_width = elem.clientWidth - margin.left - margin.right;
 	_height = elem.clientHeight - margin.top - margin.bottom;
 	_xRange = scaleX();
 	_yRange = scaleY();
 
-	d3.select('svg').remove();  // Removes previous svg for refreshing the drawing
-
-	
 }
 
 /**
